@@ -19,11 +19,11 @@ window.addEventListener('DOMContentLoaded', () => {
 
 		function apDetClock() {
 			const timer = getTaimRemaining();
-		for(let key in timer){
-			if(timer[key]>=0 && timer[key]<=9){
-				timer[key]='0'+timer[key];
+			for (const key in timer) {
+				if (timer[key] >= 0 && timer[key] <= 9) {
+					timer[key] = '0' + timer[key];
+				}
 			}
-		}
 			Hours.textContent = timer.hours;
 			TimerMinuts.textContent = timer.minets;
 			TimerSeconds.textContent = timer.seconds;
