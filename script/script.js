@@ -1,7 +1,5 @@
 'use strict';
 window.addEventListener('DOMContentLoaded', () => {
-	//'use strict';
-	//timer
 	const countTimer = dedline => {
 		const Hours = document.querySelector('#timer-hours'),
 			TimerMinuts = document.querySelector('#timer-minutes'),
@@ -29,7 +27,6 @@ window.addEventListener('DOMContentLoaded', () => {
 			TimerSeconds.textContent = timer.seconds;
 			setTimeout(apDetClock, 1000);
 			if (timer.timerRemaring > 0) {
-				//setTimeout(apDetClock, 1000);
 				setInterval(apDetClock, 1000);
 			} else {
 				Hours.textContent = '00';

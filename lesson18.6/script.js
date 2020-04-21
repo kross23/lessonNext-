@@ -49,7 +49,6 @@ window.addEventListener('DOMContentLoaded', () => {
 				day.textContent = taimDay[3];
 			}
 
-			//(year % 4 === 0 && year % 100 > 0) || year %400 == 0) ? 366 : 365
 
 			weeK.textContent = arr[parseInt(timer.weeks)];
 			Hours.textContent = timer.hours;
