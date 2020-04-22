@@ -67,11 +67,11 @@ window.addEventListener('DOMContentLoaded', () => {
 			nt = nt + 0.1;
 			let top = popupContent.style.top;
 			top = parseInt(top);
-			top--;
+			top-= 5;
 			popap.style.opacity = `nt`;
 			popap.style.opacity = `${nt}`;
 			popupContent.style.top = `${top}%`;
-			if (nt < 1|| top>10) {
+			if (nt < 1|| top > 10) {
 				requestAnimationFrame(step);
 			}
 			  };
