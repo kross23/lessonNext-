@@ -60,35 +60,29 @@ window.addEventListener('DOMContentLoaded', () => {
 			popupBtn = document.querySelectorAll('.popup-btn'),
 			popupClouse = document.querySelector('.popup-close'),
 			popupContent = popap.querySelector('.popup-content');
-		function printNumbers(from, to) {
-			let current = from;
-			setTimeout(function go() {
-			  console.log(current);
-			  if (current > 10) {
-				  const p1 = current;
-					popupContent.style.top = `${p1}%`;//10
-			  }
-			  if (current > 38) {
-				  const p2 = current;
-				  popupContent.style.left = `${p2}%`;//38
-			  }
-			  // eslint-disable-next-line no-mixed-spaces-and-tabs
-			  if (current > to) {
-					setTimeout(go, 8);
-	 	  }
-				current -= 2;
-			}, 90);
-		}
-
-		    // eslint-disable-next-line no-mixed-spaces-and-tabs
+			let pt =1;
+			const step = ()=> {
+		  let nt = popap.style.opacity;
+			nt =  parseFloat(nt);
+			nt = nt + 0.1;
+			let top = popupContent.style.top;
+			top = parseInt(top);
+			top--;
+			popap.style.opacity = `nt`;
+			popap.style.opacity = `${nt}`;
+			popupContent.style.top = `${top}%`;
+			if (nt < 1|| top>10) {
+				requestAnimationFrame(step);
+			}
+			  };
 		    popupBtn.forEach(element => {
 			element.addEventListener('click', () => {
 				if (document.body.clientWidth > 768) {
 					popap.style.display = 'block';
-					popupContent.style.left = `100%`;
+					popap.style.opacity = `0`;
 					popupContent.style.top = `100%`;
-					  printNumbers(100, 10);
-					  console.log(document.body.clientWidth);
+					requestAnimationFrame(step);
+					console.log('popap.style.opacity: ', popap.style.opacity);
 				} else {
 					popap.style.display = 'block';
 				}
