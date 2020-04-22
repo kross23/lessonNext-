@@ -37,7 +37,7 @@ window.addEventListener('DOMContentLoaded', () => {
 		}
 		apDetClock();
 	};
-	//countTimer('23 aprel 2020');
+	countTimer('23 aprel 2020');
 	//......menu..............
 	const toglMenu = () => {
 		const btnMenu = document.querySelector('.menu'),
@@ -53,7 +53,7 @@ window.addEventListener('DOMContentLoaded', () => {
 			element.addEventListener('click', handlerMenu);
 		});
 	};
-	//toglMenu();
+	toglMenu();
 	//..popap..
 	const togglePopup = () => {
 		const popap = document.querySelector('.popup'),
