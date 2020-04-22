@@ -60,18 +60,17 @@ window.addEventListener('DOMContentLoaded', () => {
 			popupBtn = document.querySelectorAll('.popup-btn'),
 			popupClouse = document.querySelector('.popup-close'),
 			popupContent = popap.querySelector('.popup-content');
-			let pt =1;
-			const step = ()=> {
+		const step = () => {
 		  let nt = popap.style.opacity;
 			nt =  parseFloat(nt);
-			nt = nt + 0.1;
+			nt += 0.1;
 			let top = popupContent.style.top;
 			top = parseInt(top);
-			top-= 5;
+			top -= 5;
 			popap.style.opacity = `nt`;
 			popap.style.opacity = `${nt}`;
 			popupContent.style.top = `${top}%`;
-			if (nt < 1|| top > 10) {
+			if (nt < 1 || top > 10) {
 				requestAnimationFrame(step);
 			}
 			  };
@@ -93,4 +92,33 @@ window.addEventListener('DOMContentLoaded', () => {
 		});
 	};
 	togglePopup();
+	//........кнопка прокрутки
+	const Scroll = () => {
+		const serviceBlock = document.querySelector('a');
+		console.log('serviceBlock: ', serviceBlock);
+		const str = () => {
+			let stra = document.documentElement.scrollTop;
+			stra = parseFloat(stra);
+			stra += 4;
+			document.documentElement.scrollTop = stra;
+			if (stra < 827) {
+				requestAnimationFrame(str);
+			} else {
+				return;
+			}
+
+		};
+
+
+		serviceBlock.addEventListener('click', event => { //827
+			event.preventDefault();
+			document.documentElement.scrollTop = 0;
+			str();
+			console.log(document.documentElement.scrollTop);
+
+
+		});
+	};
+	Scroll();
+
 });
