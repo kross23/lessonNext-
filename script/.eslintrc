@@ -6,7 +6,7 @@
   },
   "extends": "eslint:recommended",
   "parserOptions": {
-    "ecmaVersion": 2018
+    "ecmaVersion": 2020
   },
   "rules": {
     "indent": [
@@ -88,7 +88,7 @@
     "max-len": [
       "error",
       {
-        "code": 140,
+        "code": 120,
         "ignoreUrls": true
       }
     ],
