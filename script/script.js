@@ -37,28 +37,34 @@ window.addEventListener('DOMContentLoaded', () => {
 		}
 		apDetClock();
 	};
-	countTimer('23 aprel 2020');
+	countTimer('14 may 2020');
 	//......menu..............
 	const toglMenu = () => {
-		const btnMenu = document.querySelector('.menu'),
-			menu = document.querySelector('menu'),
-			menuItem = menu.querySelectorAll('ul>li'),
-			clousBtn = document.querySelector('.close-btn');
-		const handlerMenu = () => {
-			menu.classList.toggle('active-menu');
-		};
-		btnMenu.addEventListener('click', handlerMenu);
-		clousBtn.addEventListener('click', handlerMenu);
-		menuItem.forEach(element => {
-			element.addEventListener('click', handlerMenu);
+		const menu = document.querySelector('menu'),
+			 maiN = document.querySelector('main');
+
+		maiN.addEventListener('click', event => {
+			const target = event.target;
+			if (target.closest('.menu')) {
+				menu.classList.add('active-menu');
+			} else {
+				menu.classList.remove('active-menu');
+			}
 		});
+		menu.addEventListener('click', event => {
+			const target = event.target;
+			if (target.classList.contains('close-btn') || target.tagName === 'A' || target.matches('active-menu')) {
+				menu.classList.toggle('active-menu');
+			}
+		 });
 	};
 	toglMenu();
+
+
 	//..popap..
 	const togglePopup = () => {
 		const popap = document.querySelector('.popup'),
 			popupBtn = document.querySelectorAll('.popup-btn'),
-			popupClouse = document.querySelector('.popup-close'),
 			popupContent = popap.querySelector('.popup-content');
 		const step = () => {
 		  let nt = popap.style.opacity;
@@ -66,7 +72,7 @@ window.addEventListener('DOMContentLoaded', () => {
 			nt += 0.1;
 			let top = popupContent.style.top;
 			top = parseInt(top);
-			top -= 5;
+			top -= 1;
 			popap.style.opacity = `nt`;
 			popap.style.opacity = `${nt}`;
 			popupContent.style.top = `${top}%`;
@@ -79,7 +85,7 @@ window.addEventListener('DOMContentLoaded', () => {
 				if (document.body.clientWidth > 768) {
 					popap.style.display = 'block';
 					popap.style.opacity = `0`;
-					popupContent.style.top = `100%`;
+					//	popupContent.style.top = `100%`;
 					requestAnimationFrame(step);
 					console.log('popap.style.opacity: ', popap.style.opacity);
 				} else {
@@ -87,15 +93,22 @@ window.addEventListener('DOMContentLoaded', () => {
 				}
 			});
 		});
-		popupClouse.addEventListener('click', () => {
-			popap.style.display = 'none';
+		popap.addEventListener('click', event => {
+			let target = event.target;
+			if (target.classList.contains('popup-close')) {
+				popap.style.display = 'none';
+			} else {
+				target = target.closest('.popup-content');
+			}
+			if (!target) {
+				popap.style.display = 'none';
+			}
 		});
 	};
 	togglePopup();
 	//........кнопка прокрутки
 	const Scroll = () => {
 		const serviceBlock = document.querySelector('a');
-		console.log('serviceBlock: ', serviceBlock);
 		const str = () => {
 			let stra = document.documentElement.scrollTop;
 			stra = parseFloat(stra);
@@ -106,13 +119,9 @@ window.addEventListener('DOMContentLoaded', () => {
 			} else {
 				return;
 			}
-
 		};
-
-
 		serviceBlock.addEventListener('click', event => { //827
 			event.preventDefault();
-			document.documentElement.scrollTop = 0;
 			str();
 			console.log(document.documentElement.scrollTop);
 
@@ -120,5 +129,36 @@ window.addEventListener('DOMContentLoaded', () => {
 		});
 	};
 	Scroll();
+	//.............................taby.....................
+	const tabs = () => {
+		const tabHeder = document.querySelector('.service-header'),
+			tab = tabHeder.querySelectorAll('.service-header-tab'),
+			tabContent = document.querySelectorAll('.service-tab');
+		const togglTabContent = index => {
+			for (let i = 0; i < tabContent.length; i++) {
+				if (index === i) {
+					tabContent[i].classList.remove('d-none');
+					tab[i].classList.add('active');
+				} else {
+					tabContent[i].classList.add('d-none');
+					tab[i].classList.remove('active');
+				}
+			}
+		};
+		tabHeder.addEventListener('click', event => {
+			let target = event.target;
+			target = target.closest('.service-header-tab');
+			if (target !== null) {
+				tab.forEach((item, index) => {
+					if (item === target) {
+						togglTabContent(index);
+					}
+				});
+			}
+		});
+	};
+	tabs();
+
+
 
 });
