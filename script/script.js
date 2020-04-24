@@ -38,7 +38,7 @@ window.addEventListener('DOMContentLoaded', () => {
 		}
 		apDetClock();
 	};
-	//	countTimer('14 may 2020');
+		countTimer('14 may 2020');
 	//......menu..............
 
 	const toglMenu = () => {
@@ -60,7 +60,7 @@ window.addEventListener('DOMContentLoaded', () => {
 			}
 		 });
 	};
-	//	toglMenu();
+		toglMenu();
 	//..popap....................
 
 	const togglePopup = () => {
@@ -106,7 +106,7 @@ window.addEventListener('DOMContentLoaded', () => {
 			}
 		});
 	};
-	//	togglePopup();
+		togglePopup();
 	//........кнопка прокрутки
 
 	const scroll = () => {
@@ -130,7 +130,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 		});
 	};
-	//	scroll();
+		scroll();
 	//.............................taby.....................
 
 	const tabs = () => {
@@ -160,8 +160,8 @@ window.addEventListener('DOMContentLoaded', () => {
 			}
 		});
 	};
-	//	tabs();
-	//...........................
+		tabs();
+
 
 	//................слайдер......
 	const slayder = () => {
