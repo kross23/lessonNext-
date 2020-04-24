@@ -1,6 +1,7 @@
-/* eslint-disable no-mixed-spaces-and-tabs */
+
 'use strict';
 window.addEventListener('DOMContentLoaded', () => {
+
 	const countTimer = dedline => {
 		const Hours = document.querySelector('#timer-hours'),
 			TimerMinuts = document.querySelector('#timer-minutes'),
@@ -39,6 +40,7 @@ window.addEventListener('DOMContentLoaded', () => {
 	};
 	countTimer('14 may 2020');
 	//......menu..............
+
 	const toglMenu = () => {
 		const menu = document.querySelector('menu'),
 			 maiN = document.querySelector('main');
@@ -59,9 +61,8 @@ window.addEventListener('DOMContentLoaded', () => {
 		 });
 	};
 	toglMenu();
+	//..popap....................
 
-
-	//..popap..
 	const togglePopup = () => {
 		const popap = document.querySelector('.popup'),
 			popupBtn = document.querySelectorAll('.popup-btn'),
@@ -107,12 +108,13 @@ window.addEventListener('DOMContentLoaded', () => {
 	};
 	togglePopup();
 	//........кнопка прокрутки
+
 	const Scroll = () => {
 		const serviceBlock = document.querySelector('a');
 		const str = () => {
 			let stra = document.documentElement.scrollTop;
 			stra = parseFloat(stra);
-			stra += 4;
+			stra += 40;
 			document.documentElement.scrollTop = stra;
 			if (stra < 827) {
 				requestAnimationFrame(str);
@@ -130,6 +132,7 @@ window.addEventListener('DOMContentLoaded', () => {
 	};
 	Scroll();
 	//.............................taby.....................
+
 	const tabs = () => {
 		const tabHeder = document.querySelector('.service-header'),
 			tab = tabHeder.querySelectorAll('.service-header-tab'),
@@ -158,6 +161,108 @@ window.addEventListener('DOMContentLoaded', () => {
 		});
 	};
 	tabs();
+	//...........................
+	const dot = () => {
+		const uL = document.createElement('ul');
+			  uL.classList.add('portfolio-dots');
+		  const portofino = document.querySelector('.portfolio-content');
+				  for (let i = 0; i < 6; i++) {
+			const Li = document.createElement('li');
+				  Li.classList.add('dot');
+				  uL.append(Li);
+				  }
+				  portofino.append(uL);
+		console.log('portofino: ', portofino);
+		console.log('uL: ', uL);
+
+	  };
+	  dot();
+	//................слайдер......
+	const slayder = () => {
+		// eslint-disable-next-line no-unused-vars
+		const slayde = document.querySelectorAll('.portfolio-item'),
+			dot = document.querySelectorAll('.dot'),
+			Slayder = document.querySelector('.portfolio-content');
+
+		let carentSlayd = 0,
+			interval;
+
+		const prew = (elem, index, strClass) => {
+			elem[index].classList.remove(strClass);
+		};
+		const next = (elem, index, strClass) => {
+			elem[index].classList.add(strClass);
+		};
+
+		const autoplaySlayd = () => {
+			prew(dot, carentSlayd, 'dot-active');
+			prew(slayde, carentSlayd, 'portfolio-item-active');
+			carentSlayd++;
+			if (carentSlayd >= slayde.length) {
+				carentSlayd = 0;
+			} else if (carentSlayd < 0) {
+				carentSlayd = slayde.length - 1;
+			}
+			next(slayde, carentSlayd, 'portfolio-item-active');
+			next(dot, carentSlayd, 'dot-active');
+
+		};
+		const startSlayde = (time = 3000) => {
+			interval = setInterval(autoplaySlayd, time);
+		};
+		const stopSlayde = () => {
+			clearInterval(interval);
+		};
+
+		Slayder.addEventListener('click',  event => {
+			event.preventDefault();
+			const target = event.target;
+			if (!target.matches('.portfolio-btn, .dot ')) {
+				return;
+			}
+			prew(dot, carentSlayd, 'dot-active');
+			prew(slayde, carentSlayd, 'portfolio-item-active');
+
+			if (target.matches('#arrow-right')) {
+				carentSlayd++;
+			} else if (target.matches('#arrow-left')) {
+				carentSlayd--;
+			} else if (target.matches('.dot')) {
+				dot.forEach((item, index) => {
+					if (item === target) {
+						carentSlayd = index;
+					}
+				});
+			}
+			if (carentSlayd >= slayde.length) {
+				carentSlayd = 0;
+			}
+			if (carentSlayd < 0) {
+				carentSlayd = slayde.length - 1;
+			}
+			next(slayde, carentSlayd, 'portfolio-item-active');
+			next(dot, carentSlayd, 'dot-active');
+
+		});
+		Slayder.addEventListener('mouseover', event => {
+			if (event.target.matches('.portfolio-btn') ||
+			event.target.matches('.dot')) {
+				stopSlayde();
+			}
+		});
+		Slayder.addEventListener('mouseout', event => {
+			if (event.target.matches('.portfolio-btn') ||
+			event.target.matches('.dot')) {
+				startSlayde();
+			}
+		});
+
+
+
+		startSlayde(1500);
+	};
+	slayder();
+	//.................................dot...................
 
 
 
