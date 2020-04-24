@@ -256,7 +256,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 		startSlayde(1500);
 	};
-	//	slayder();
+		slayder();
 	//.................................data-image...................
 	const dataImage = () => {
 		const command = document.querySelector('.command'),
