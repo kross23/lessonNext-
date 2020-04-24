@@ -162,27 +162,22 @@ window.addEventListener('DOMContentLoaded', () => {
 	};
 	tabs();
 	//...........................
-	const dot = () => {
-		const uL = document.createElement('ul');
-			  uL.classList.add('portfolio-dots');
-		  const portofino = document.querySelector('.portfolio-content');
-				  for (let i = 0; i < 6; i++) {
-			const Li = document.createElement('li');
-				  Li.classList.add('dot');
-				  uL.append(Li);
-				  }
-				  portofino.append(uL);
-		console.log('portofino: ', portofino);
-		console.log('uL: ', uL);
 
-	  };
-	  dot();
 	//................слайдер......
 	const slayder = () => {
-		// eslint-disable-next-line no-unused-vars
+		const uL = document.createElement('ul');
+				  uL.classList.add('portfolio-dots');
+			  const portofino = document.querySelector('.portfolio-content');
+					  for (let i = 0; i < 6; i++) {
+			const Li = document.createElement('li');
+					  Li.classList.add('dot');
+					  uL.append(Li);
+					  }
+					  portofino.append(uL);
+
 		const slayde = document.querySelectorAll('.portfolio-item'),
 			dot = document.querySelectorAll('.dot'),
-			Slayder = document.querySelector('.portfolio-content');
+			clayder = document.querySelector('.portfolio-content');
 
 		let carentSlayd = 0,
 			interval;
@@ -214,7 +209,7 @@ window.addEventListener('DOMContentLoaded', () => {
 			clearInterval(interval);
 		};
 
-		Slayder.addEventListener('click',  event => {
+		clayder.addEventListener('click',  event => {
 			event.preventDefault();
 			const target = event.target;
 			if (!target.matches('.portfolio-btn, .dot ')) {
@@ -244,13 +239,13 @@ window.addEventListener('DOMContentLoaded', () => {
 			next(dot, carentSlayd, 'dot-active');
 
 		});
-		Slayder.addEventListener('mouseover', event => {
+		clayder.addEventListener('mouseover', event => {
 			if (event.target.matches('.portfolio-btn') ||
 			event.target.matches('.dot')) {
 				stopSlayde();
 			}
 		});
-		Slayder.addEventListener('mouseout', event => {
+		clayder.addEventListener('mouseout', event => {
 			if (event.target.matches('.portfolio-btn') ||
 			event.target.matches('.dot')) {
 				startSlayde();
