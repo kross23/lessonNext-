@@ -38,7 +38,7 @@ window.addEventListener('DOMContentLoaded', () => {
 		}
 		apDetClock();
 	};
-	countTimer('14 may 2020');
+	//	countTimer('14 may 2020');
 	//......menu..............
 
 	const toglMenu = () => {
@@ -60,7 +60,7 @@ window.addEventListener('DOMContentLoaded', () => {
 			}
 		 });
 	};
-	toglMenu();
+	//	toglMenu();
 	//..popap....................
 
 	const togglePopup = () => {
@@ -106,10 +106,10 @@ window.addEventListener('DOMContentLoaded', () => {
 			}
 		});
 	};
-	togglePopup();
+	//	togglePopup();
 	//........кнопка прокрутки
 
-	const Scroll = () => {
+	const scroll = () => {
 		const serviceBlock = document.querySelector('a');
 		const str = () => {
 			let stra = document.documentElement.scrollTop;
@@ -130,7 +130,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 		});
 	};
-	Scroll();
+	//	scroll();
 	//.............................taby.....................
 
 	const tabs = () => {
@@ -160,7 +160,7 @@ window.addEventListener('DOMContentLoaded', () => {
 			}
 		});
 	};
-	tabs();
+	//	tabs();
 	//...........................
 
 	//................слайдер......
@@ -256,9 +256,50 @@ window.addEventListener('DOMContentLoaded', () => {
 
 		startSlayde(1500);
 	};
-	slayder();
-	//.................................dot...................
+	//	slayder();
+	//.................................data-image...................
+	const dataImage = () => {
+		const command = document.querySelector('.command'),
+			commandPhoto = document.querySelectorAll('.command__photo');
+		command.addEventListener('mouseover', event => {
+			commandPhoto.forEach(item => {
+				if (event.target === item) {
+					const targetsrc = event.target.src;
+					event.target.src = event.target.dataset.img;
+					event.target.dataset.img = targetsrc;
+
+				}
+			});
+		});
+		command.addEventListener('mouseout', event => {
+			commandPhoto.forEach(item => {
+				if (event.target === item) {
+					const targetsrc = event.target.src;
+					event.target.src = event.target.dataset.img;
+					event.target.dataset.img = targetsrc;
+
+				}
+			});
+		});
+
+	};
+	dataImage();
+	const calck = () => {
+		const calcBlock = document.querySelector('.calc-block'),
+			calcSquare = document.querySelector('.calc-square'),
+
+			calcCount = document.querySelector('.calc-count'),
+
+			calcDay = document.querySelector('.calc-day');
 
 
+		calcBlock.addEventListener('input', () => {
+			event.target.value = event.target.value.replace(/\D/, '');
+			console.log('calcDay : ', calcDay.value);
+			console.log('calcCount: ', calcCount.value);
+			console.log('calcSquare: ', calcSquare.value);
+		});
+	};
+	calck();
 
 });
