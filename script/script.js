@@ -21,7 +21,7 @@ window.addEventListener('DOMContentLoaded', () => {
 			};
 		};
 
-		const updateClock = () => {
+		const updateClock = setInterval(() => {
 			const timer = getTaimRemaining();//getTimeRamaining
 			for (const key in timer) {
 				if (timer[key] >= 0 && timer[key] <= 9) {
@@ -32,16 +32,13 @@ window.addEventListener('DOMContentLoaded', () => {
 			timerMinuts.textContent = timer.minets;
 			timerSeconds.textContent = timer.seconds;
 
-			if (getTaimRemaining().timeRamaining > 0) {
-				//setInterval(updateClock(), 1000);
-			} else {
+			if (timer.timeRamaining < 0) {
+				clearInterval(updateClock);
 				timerhours.textContent = '00';
 				timerMinuts.textContent = '00';
 				timerSeconds.textContent = '00';
-				return;
 			}
-		};
-		setInterval(updateClock, 1000);
+		}, 1000);
 	};
 	countTimer('14 may 2020');
 	//......menu..............
@@ -314,17 +311,13 @@ window.addEventListener('DOMContentLoaded', () => {
 		calcBlock.addEventListener('input', event => {
 			const target = event.target;
 			target.value = target.value.replace(/\D/g, '');
-			// if (target.matches('.calc-type') || target.matches(.calc-square')||
-			//  target.matches('.calc-count') || target.matches('.calc-day')){
-			// 	console.log(1);
 			if (target.matches('input')) {
-				  ///\D/g, ''
 				countSum();
 			}
-			
 		});
-
 	};
 	calck(100);
-
 });
+// if (target.matches('.calc-type') || target.matches(.calc-square')||
+//  target.matches('.calc-count') || target.matches('.calc-day')){
+// 	console.log(1);
