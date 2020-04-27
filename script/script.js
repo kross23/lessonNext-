@@ -287,6 +287,23 @@ window.addEventListener('DOMContentLoaded', () => {
 			calcType = document.querySelector('.calc-type'),
 			totalValue = document.getElementById('total'),
 			calcDay = document.querySelector('.calc-day');
+		let count = 0;
+
+		const nums = total => {
+
+			// if (total > 0) {
+				totalValue.textContent = count;
+				count += 100;
+				count = parseInt(count);
+				if (count <= total) {
+					console.log('total: ', total);
+					requestAnimationFrame(nums);
+				}
+
+			// } else {
+			// 	return;
+			// }
+		};
 		const countSum = () => {
 			let total = 0,
 				cauntValue = 1,
@@ -303,15 +320,20 @@ window.addEventListener('DOMContentLoaded', () => {
 			}
 			if (typeValue && squareValue) {
 				total = prise * typeValue * squareValue * cauntValue * dayValue;
+				total = Math.floor(total);
 			} else {
 				total = 0;
 			}
 			totalValue.textContent = total;
+			//nums(total);
 		};
+
 		calcBlock.addEventListener('input', event => {
 			const target = event.target;
-			target.value = target.value.replace(/\D/g, '');
 			if (target.matches('input')) {
+				target.value = target.value.replace(/\D/g, '');
+			}
+			if (target.matches('input') || target.matches('select')) {
 				countSum();
 			}
 		});
