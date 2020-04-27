@@ -1,4 +1,3 @@
-
 'use strict';
 window.addEventListener('DOMContentLoaded', () => {
 
@@ -14,7 +13,12 @@ window.addEventListener('DOMContentLoaded', () => {
 				seconds = Math.floor(timerRemaring % 60),
 				minets = Math.floor((timerRemaring / 60) % 60),
 				hours = Math.floor(timerRemaring / 60 / 60);
-			return { timerRemaring, hours, minets, seconds, };
+			return {
+				timerRemaring,
+				hours,
+				minets,
+				seconds,
+			};
 		}
 
 		function apDetClock() {
@@ -38,12 +42,12 @@ window.addEventListener('DOMContentLoaded', () => {
 		}
 		apDetClock();
 	};
-		countTimer('14 may 2020');
+	countTimer('14 may 2020');
 	//......menu..............
 
 	const toglMenu = () => {
 		const menu = document.querySelector('menu'),
-			 maiN = document.querySelector('main');
+			maiN = document.querySelector('main');
 
 		maiN.addEventListener('click', event => {
 			const target = event.target;
@@ -58,9 +62,9 @@ window.addEventListener('DOMContentLoaded', () => {
 			if (target.classList.contains('close-btn') || target.tagName === 'A' || target.matches('active-menu')) {
 				menu.classList.toggle('active-menu');
 			}
-		 });
+		});
 	};
-		toglMenu();
+	toglMenu();
 	//..popap....................
 
 	const togglePopup = () => {
@@ -68,8 +72,8 @@ window.addEventListener('DOMContentLoaded', () => {
 			popupBtn = document.querySelectorAll('.popup-btn'),
 			popupContent = popap.querySelector('.popup-content');
 		const step = () => {
-		  let nt = popap.style.opacity;
-			nt =  parseFloat(nt);
+			let nt = popap.style.opacity;
+			nt = parseFloat(nt);
 			nt += 0.1;
 			let top = popupContent.style.top;
 			top = parseInt(top);
@@ -80,8 +84,8 @@ window.addEventListener('DOMContentLoaded', () => {
 			if (nt < 1 || top > 10) {
 				requestAnimationFrame(step);
 			}
-			  };
-		    popupBtn.forEach(element => {
+		};
+		popupBtn.forEach(element => {
 			element.addEventListener('click', () => {
 				if (document.body.clientWidth > 768) {
 					popap.style.display = 'block';
@@ -106,7 +110,7 @@ window.addEventListener('DOMContentLoaded', () => {
 			}
 		});
 	};
-		togglePopup();
+	togglePopup();
 	//........кнопка прокрутки
 
 	const scroll = () => {
@@ -130,7 +134,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 		});
 	};
-		scroll();
+	scroll();
 	//.............................taby.....................
 
 	const tabs = () => {
@@ -160,28 +164,25 @@ window.addEventListener('DOMContentLoaded', () => {
 			}
 		});
 	};
-		tabs();
-
+	tabs();
 
 	//................слайдер......
 	const slayder = () => {
 		const uL = document.createElement('ul');
-				  uL.classList.add('portfolio-dots');
-			  const portofino = document.querySelector('.portfolio-content');
-					  for (let i = 0; i < 6; i++) {
+		uL.classList.add('portfolio-dots');
+		const portofino = document.querySelector('.portfolio-content');
+		for (let i = 0; i < 6; i++) {
 			const Li = document.createElement('li');
-					  Li.classList.add('dot');
-					  uL.append(Li);
-					  }
-					  portofino.append(uL);
+			Li.classList.add('dot');
+			uL.append(Li);
+		}
+		portofino.append(uL);
 
 		const slayde = document.querySelectorAll('.portfolio-item'),
 			dot = document.querySelectorAll('.dot'),
 			clayder = document.querySelector('.portfolio-content');
-
 		let carentSlayd = 0,
 			interval;
-
 		const prew = (elem, index, strClass) => {
 			elem[index].classList.remove(strClass);
 		};
@@ -209,7 +210,7 @@ window.addEventListener('DOMContentLoaded', () => {
 			clearInterval(interval);
 		};
 
-		clayder.addEventListener('click',  event => {
+		clayder.addEventListener('click', event => {
 			event.preventDefault();
 			const target = event.target;
 			if (!target.matches('.portfolio-btn, .dot ')) {
@@ -241,22 +242,19 @@ window.addEventListener('DOMContentLoaded', () => {
 		});
 		clayder.addEventListener('mouseover', event => {
 			if (event.target.matches('.portfolio-btn') ||
-			event.target.matches('.dot')) {
+				event.target.matches('.dot')) {
 				stopSlayde();
 			}
 		});
 		clayder.addEventListener('mouseout', event => {
 			if (event.target.matches('.portfolio-btn') ||
-			event.target.matches('.dot')) {
+				event.target.matches('.dot')) {
 				startSlayde();
 			}
 		});
-
-
-
 		startSlayde(1500);
 	};
-		slayder();
+	slayder();
 	//.................................data-image...................
 	const dataImage = () => {
 		const command = document.querySelector('.command'),
@@ -284,22 +282,46 @@ window.addEventListener('DOMContentLoaded', () => {
 
 	};
 	dataImage();
-	const calck = () => {
+	const calck = (prise = 100) => {
 		const calcBlock = document.querySelector('.calc-block'),
 			calcSquare = document.querySelector('.calc-square'),
-
 			calcCount = document.querySelector('.calc-count'),
-
+			calcType = document.querySelector('.calc-type'),
+			totalValue = document.getElementById('total'),
 			calcDay = document.querySelector('.calc-day');
-
-
-		calcBlock.addEventListener('input', () => {
-			event.target.value = event.target.value.replace(/\D/, '');
-			console.log('calcDay : ', calcDay.value);
-			console.log('calcCount: ', calcCount.value);
-			console.log('calcSquare: ', calcSquare.value);
+		const countSum = () => {
+			let total = 0,
+				cauntValue = 1,
+				dayValue = 1;
+			const typeValue = calcType.options[calcType.selectedIndex].value,
+				squareValue = +calcSquare.value;
+			if (calcCount.value > 1) {
+				cauntValue += (calcCount.value - 1) / 10;
+			}
+			if (calcDay.value && calcDay.value < 5) {
+				dayValue *= 2;
+			} else if (calcDay.value && calcDay.value < 10 && calcDay.value > 5) {
+				dayValue *= 1.5;
+			}
+			if (typeValue && squareValue) {
+				total = prise * typeValue * squareValue * cauntValue * dayValue;
+			} else {
+				total = 0;
+			}
+			totalValue.textContent = total;
+		};
+		calcBlock.addEventListener('change', event => {
+			const target = event.target;
+			// if (target.matches('.calc-type') || target.matches(.calc-square')||
+			//  target.matches('.calc-count') || target.matches('.calc-day')){
+			// 	console.log(1);
+			if (target.matches('input')) {
+				target.value = event.target.value.replace(/\D/, '');
+			}
+			countSum();
 		});
+
 	};
-	calck();
+	calck(100);
 
 });
