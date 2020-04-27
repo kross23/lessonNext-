@@ -2,45 +2,46 @@
 window.addEventListener('DOMContentLoaded', () => {
 
 	const countTimer = dedline => {
-		const Hours = document.querySelector('#timer-hours'),
-			TimerMinuts = document.querySelector('#timer-minutes'),
-			TimerSeconds = document.querySelector('#timer-seconds');
+		const timerhours = document.querySelector('#timer-hours'),
+			timerMinuts = document.querySelector('#timer-minutes'),
+			timerSeconds = document.querySelector('#timer-seconds');
 
-		function getTaimRemaining() {
+		const getTaimRemaining = () => {
 			const dateStop = new Date(dedline).getTime(),
 				dateNow = new Date().getTime(),
-				timerRemaring = (dateStop - dateNow) / 1000,
-				seconds = Math.floor(timerRemaring % 60),
-				minets = Math.floor((timerRemaring / 60) % 60),
-				hours = Math.floor(timerRemaring / 60 / 60);
+				timeRamaining = (dateStop - dateNow) / 1000,
+				seconds = Math.floor(timeRamaining % 60),
+				minets = Math.floor((timeRamaining / 60) % 60),
+				hours = Math.floor(timeRamaining / 60 / 60);
 			return {
-				timerRemaring,
+				timeRamaining,
 				hours,
 				minets,
 				seconds,
 			};
-		}
+		};
 
-		function apDetClock() {
-			const timer = getTaimRemaining();
+		const updateClock = () => {
+			const timer = getTaimRemaining();//getTimeRamaining
 			for (const key in timer) {
 				if (timer[key] >= 0 && timer[key] <= 9) {
 					timer[key] = '0' + timer[key];
 				}
 			}
-			Hours.textContent = timer.hours;
-			TimerMinuts.textContent = timer.minets;
-			TimerSeconds.textContent = timer.seconds;
-			setTimeout(apDetClock, 1000);
-			if (timer.timerRemaring > 0) {
-				setInterval(apDetClock, 1000);
+			timerhours.textContent = timer.hours;
+			timerMinuts.textContent = timer.minets;
+			timerSeconds.textContent = timer.seconds;
+
+			if (getTaimRemaining().timeRamaining > 0) {
+				//setInterval(updateClock(), 1000);
 			} else {
-				Hours.textContent = '00';
-				TimerMinuts.textContent = '00';
-				TimerSeconds.textContent = '00';
+				timerhours.textContent = '00';
+				timerMinuts.textContent = '00';
+				timerSeconds.textContent = '00';
+				return;
 			}
-		}
-		apDetClock();
+		};
+		setInterval(updateClock, 1000);
 	};
 	countTimer('14 may 2020');
 	//......menu..............
@@ -310,15 +311,17 @@ window.addEventListener('DOMContentLoaded', () => {
 			}
 			totalValue.textContent = total;
 		};
-		calcBlock.addEventListener('change', event => {
+		calcBlock.addEventListener('input', event => {
 			const target = event.target;
+			target.value = target.value.replace(/\D/g, '');
 			// if (target.matches('.calc-type') || target.matches(.calc-square')||
 			//  target.matches('.calc-count') || target.matches('.calc-day')){
 			// 	console.log(1);
 			if (target.matches('input')) {
-				target.value = event.target.value.replace(/\D/, '');
+				  ///\D/g, ''
+				countSum();
 			}
-			countSum();
+			
 		});
 
 	};
