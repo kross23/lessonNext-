@@ -94,7 +94,7 @@ class Validator {
 	setPattern() {
 		
 		if (!this.pattern.phone) {
-			this.pattern.phone = /^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/;
+			this.pattern.phone = /^\+?[78][-\(]?\d{3}\)?-?\d{3}-?\d{2}-?\d{2}$/;
 		}
 		if (!this.pattern.name) {
 			this.pattern.message = /^[?!,.а-яА-ЯёЁ\s]+$/;
