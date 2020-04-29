@@ -22,7 +22,7 @@ window.addEventListener('DOMContentLoaded', () => {
 		};
 
 		const updateClock = setInterval(() => {
-			const timer = getTaimRemaining();//getTimeRamaining
+			const timer = getTaimRemaining(); //getTimeRamaining
 			for (const key in timer) {
 				if (timer[key] >= 0 && timer[key] <= 9) {
 					timer[key] = '0' + timer[key];
@@ -288,21 +288,19 @@ window.addEventListener('DOMContentLoaded', () => {
 			totalValue = document.getElementById('total'),
 			calcDay = document.querySelector('.calc-day');
 		let count = 0;
+		let numer = 0;
+		const nums = (to, total) => {
+			totalValue.textContent = count;
+			count += 100;
+			console.log('count : ', count);
+			//	count = parseInt(count);
 
-		const nums = total => {
-
-			// if (total > 0) {
-				totalValue.textContent = count;
-				count += 100;
-				count = parseInt(count);
-				if (count <= total) {
-					console.log('total: ', total);
-					requestAnimationFrame(nums);
-				}
-
-			// } else {
-			// 	return;
-			// }
+			if (count < to) {
+				requestAnimationFrame(nums);
+			} else {
+				totalValue.textContent = total;
+				return;
+			}
 		};
 		const countSum = () => {
 			let total = 0,
@@ -324,8 +322,12 @@ window.addEventListener('DOMContentLoaded', () => {
 			} else {
 				total = 0;
 			}
+			numer = total;
+			//console.log('numer: ', numer);
+			// nums(numer, numer);
+			//setTimeout(() => totalValue.textContent = total, 1000);
 			totalValue.textContent = total;
-			//nums(total);
+
 		};
 
 		calcBlock.addEventListener('input', event => {
