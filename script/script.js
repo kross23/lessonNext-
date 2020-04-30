@@ -90,7 +90,7 @@ window.addEventListener('DOMContentLoaded', () => {
 					popap.style.opacity = `0`;
 					//	popupContent.style.top = `100%`;
 					requestAnimationFrame(step);
-					console.log('popap.style.opacity: ', popap.style.opacity);
+				//	console.log('popap.style.opacity: ', popap.style.opacity);
 				} else {
 					popap.style.display = 'block';
 				}
@@ -341,6 +341,61 @@ window.addEventListener('DOMContentLoaded', () => {
 		});
 	};
 	calck(100);
+	//.......................................send..............ajax
+	const sendForm = () => {
+		const errorMesage = 'что то пошло не так ',
+			loadMesage = 'загрузка....',
+			succsesMesage = 'мы скоро с вами свяжемся!';
+		const htmlBody = document.querySelector('body');
+		const statusMesage = document.createElement('div');
+		statusMesage.style.cssText = `font-size:2rem; color: #fff;`;
+		console.log('statusMesage: ', statusMesage);
+		//
+		const postData = (body, outputData, errorData) => {
+			const rexwest = new XMLHttpRequest();
+			rexwest.addEventListener('readystatechange', () => {
+				statusMesage.textContent = loadMesage;
+				if (rexwest.readyState !== 4) {
+					return;
+				}
+				if (rexwest.status === 201) {
+					outputData();
+				} else {
+					errorData(rexwest.status);
+				}
+			});
+			rexwest.open('POST', './server.php');
+			rexwest.setRequestHeader('Content-Type', 'application/json');
+			rexwest.send(JSON.stringify(body));
+		};
+		//
+		htmlBody.addEventListener('submit', event => {
+			event.preventDefault();
+			//const target = event.target.id;
+			const form = document.getElementById(event.target.id);
+			form.appendChild(statusMesage);
+			const formData = new FormData(form);
+
+			const body = {};
+			for (const key of formData.entries()) {
+				body[key[0]] = key[1];
+			}
+			postData(body, () => {
+				statusMesage.textContent = succsesMesage;
+				setTimeout(() => {
+					form.querySelectorAll('input[name], textarea').forEach(el => el.value = '');
+					const pop = document.querySelector('.popup');
+					pop.style.display = 'none';
+				}, 3000);
+
+				//
+			}, error => {
+				statusMesage.textContent = errorMesage;
+				console.error(error);
+			});
+		});
+	};
+	sendForm();
 });
 // if (target.matches('.calc-type') || target.matches(.calc-square')||
 //  target.matches('.calc-count') || target.matches('.calc-day')){

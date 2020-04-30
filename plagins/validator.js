@@ -53,7 +53,6 @@ class Validator {
 			this.showError(target);
 			this.error.add(target);
 		}
-		console.log(this.error);
 	}
 	showError(elem) {
 		elem.classList.remove('success');
@@ -67,7 +66,6 @@ class Validator {
 		elem.insertAdjacentElement('afterend', errorDiv);
 	}
 	showSuccess(elem) {
-		console.log('elem: ', elem);
 		elem.classList.remove('error');
 		elem.classList.add('success');
 		if (elem.nextElementSibling && elem.nextElementSibling.classList.contains('validator-error')) {
@@ -91,10 +89,9 @@ class Validator {
         `;
 		document.head.appendChild(style);
 	}
-	setPattern() {
-		
+	setPattern() {	
 		if (!this.pattern.phone) {
-			this.pattern.phone = /^\+?[78][-\(]?\d{3}\)?-?\d{3}-?\d{2}-?\d{2}$/;
+			this.pattern.phone = /^\+?[78][-\(]?\d{3}\)?-?\d{3}-?\d{2}-?\d{2}$/;//^((8|\+7)[\- ]?)?(\(?\d{3,4}\)?[\- ]?)?[\d\- ]{5,10}$
 		}
 		if (!this.pattern.name) {
 			this.pattern.message = /^[?!,.а-яА-ЯёЁ\s]+$/;
@@ -104,9 +101,7 @@ class Validator {
 		}
 		if (!this.pattern.message) {
 			this.pattern.message = /^[?!,.а-яА-ЯёЁ0-9\s]+$/;
-			
 		}
-		console.log('this.pattern: ', this.pattern);
 	}
 }
 ///(^[?!,.а-яА-ЯёЁ0-9\s]+$  ) кирилица
