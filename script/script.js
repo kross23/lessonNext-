@@ -379,7 +379,7 @@ window.addEventListener('DOMContentLoaded', () => {
 			const btn = forms.querySelector('.form-btn');
 			console.log('btn : ', btn);
 			console.log('forms: ', forms);
-			name.value = name.value.replace(/^[а-яё\s]+$/g, '');
+			name.value = name.value.replace(/[a-zA-Z][a-zA-Z0-9-_\.]{1,20}$/, '');
 			email.value = email.value.replace(/^\w+@\w+\.\w{3,}$/g, '');
 
 			forms.addEventListener('submit', event => {
