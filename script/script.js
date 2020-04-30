@@ -373,14 +373,23 @@ window.addEventListener('DOMContentLoaded', () => {
 			const targetid = event.target.id;
 			const form = targetid.substring(0, 5);
 			const forms = document.getElementById(form);
+			const mailPattern = /^\w+@\w+\.\w{3,}$/;
+			const namePatern = /^[а-яА-ЯёЁ\s]+$/;
+			const phonePatern = /^\+?[78][-\(]?\d{3}\)?-?\d{3}-?\d{2}-?\d{2}$/;
+			const name = forms.querySelector('input[name="user_name"]');
+			const email = forms.querySelector('input[name = "user_email"]');
+			const phone = forms.querySelector('input[name="user_phone"]');
 
-			let name = forms.querySelector('input.form-name');
-			let email = forms.querySelector('input.form-email');
-			const btn = forms.querySelector('.form-btn');
-			console.log('btn : ', btn);
-			console.log('forms: ', forms);
-			name.value = name.value.replace(/[a-zA-Z][a-zA-Z0-9-_\.]{1,20}$/, '');
-			email.value = email.value.replace(/^\w+@\w+\.\w{3,}$/g, '');
+			if (mailPattern.test(email.value.trim())) {
+				console.log('mailPattern.test(email.value.trim()): ', mailPattern.test(email.value.trim()));
+				console.log('арес почты ');
+			} else if (namePatern.test(name.value.trim())) {
+				console.log('namePatern.test(name.value.trim()): ', namePatern.test(name.value.trim()));
+				
+			} else if (phonePatern.test(phone.value.trim())) {
+				console.log('phonePatern.test(phone.value.trim()): ', phonePatern.test(phone.value.trim()));
+			
+			}
 
 			forms.addEventListener('submit', event => {
 				event.preventDefault();
