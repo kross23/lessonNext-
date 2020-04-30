@@ -2,6 +2,7 @@
 class Validator {
 	constructor({ selector, pattern = {}, method }) {
 		this.forms = document.querySelector(selector);
+		this.btn = this.querySelector('btn');
 		this.pattern = pattern; //шаблоны
 		this.method = method; //настройки
 		this.elementsForm = [...this.forms.elements].filter(item => {
@@ -17,6 +18,12 @@ class Validator {
 			if (this.error.size) {
 				e.preventDefault();
 			}
+
+
+
+
+
+			
 			//this.elementsForm.forEach(elem => this.chekIt({ target: elem }));
 			
 		});
@@ -94,7 +101,7 @@ class Validator {
 			this.pattern.phone = /^\+?[78][-\(]?\d{3}\)?-?\d{3}-?\d{2}-?\d{2}$/;//^((8|\+7)[\- ]?)?(\(?\d{3,4}\)?[\- ]?)?[\d\- ]{5,10}$
 		}
 		if (!this.pattern.name) {
-			this.pattern.message = /^[?!,.а-яА-ЯёЁ\s]+$/;
+			this.pattern.name = /^[?!,.а-яА-ЯёЁ\s]+$/;
         }
         if (!this.pattern.email) {
 			this.pattern.email = /^\w+@\w+\.\w{2,}$/;

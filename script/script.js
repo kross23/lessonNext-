@@ -90,7 +90,7 @@ window.addEventListener('DOMContentLoaded', () => {
 					popap.style.opacity = `0`;
 					//	popupContent.style.top = `100%`;
 					requestAnimationFrame(step);
-				//	console.log('popap.style.opacity: ', popap.style.opacity);
+					//	console.log('popap.style.opacity: ', popap.style.opacity);
 				} else {
 					popap.style.display = 'block';
 				}
@@ -352,48 +352,59 @@ window.addEventListener('DOMContentLoaded', () => {
 		console.log('statusMesage: ', statusMesage);
 		//
 		const postData = (body, outputData, errorData) => {
-			const rexwest = new XMLHttpRequest();
-			rexwest.addEventListener('readystatechange', () => {
+			const request = new XMLHttpRequest();
+			request.addEventListener('readystatechange', () => {
 				statusMesage.textContent = loadMesage;
-				if (rexwest.readyState !== 4) {
+				if (request.readyState !== 4) {
 					return;
 				}
-				if (rexwest.status === 200) {
+				if (request.status === 200) {
 					outputData();
 				} else {
-					errorData(rexwest.status);
+					errorData(request.status);
 				}
 			});
-			rexwest.open('POST', './server.php');
-			rexwest.setRequestHeader('Content-Type', 'application/json');
-			rexwest.send(JSON.stringify(body));
+			request.open('POST', './server.php');
+			request.setRequestHeader('Content-Type', 'application/json');
+			request.send(JSON.stringify(body));
 		};
 		//
-		htmlBody.addEventListener('submit', event => {
-			event.preventDefault();
-			//const target = event.target.id;
-			const form = document.getElementById(event.target.id);
-			form.appendChild(statusMesage);
-			const formData = new FormData(form);
+		htmlBody.addEventListener('input', event => {
+			const targetid = event.target.id;
+			const form = targetid.substring(0, 5);
+			const forms = document.getElementById(form);
 
-			const body = {};
-			for (const key of formData.entries()) {
-				body[key[0]] = key[1];
-			}
-			postData(body, () => {
-				statusMesage.textContent = succsesMesage;
-				setTimeout(() => {
-					form.querySelectorAll('input[name], textarea').forEach(el => el.value = '');
-					const pop = document.querySelector('.popup');
-					pop.style.display = 'none';
-				}, 1000);
+			let name = forms.querySelector('input.form-name');
+			let email = forms.querySelector('input.form-email');
+			const btn = forms.querySelector('.form-btn');
+			console.log('btn : ', btn);
+			console.log('forms: ', forms);
+			name.value = name.value.replace(/^[а-яё\s]+$/g, '');
+			email.value = email.value.replace(/^\w+@\w+\.\w{3,}$/g, '');
 
-				//
-			}, error => {
-				statusMesage.textContent = errorMesage;
-				console.error(error);
+			forms.addEventListener('submit', event => {
+				event.preventDefault();
+				forms.appendChild(statusMesage);
+				const formData = new FormData(forms);
+				const body = {};
+				for (const key of formData.entries()) {
+					body[key[0]] = key[1];
+				}
+				postData(body, () => {
+					statusMesage.textContent = succsesMesage;
+					setTimeout(() => {
+						forms.querySelectorAll('input[name], textarea').forEach(el => el.value = '');
+						const pop = document.querySelector('.popup');
+						pop.style.display = 'none';
+					}, 1000);
+					//
+				}, error => {
+					statusMesage.textContent = errorMesage;
+					console.error(error);
+				});
 			});
 		});
+
 	};
 	sendForm();
 });
