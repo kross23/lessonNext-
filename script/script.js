@@ -386,7 +386,7 @@ window.addEventListener('DOMContentLoaded', () => {
 					form.querySelectorAll('input[name], textarea').forEach(el => el.value = '');
 					const pop = document.querySelector('.popup');
 					pop.style.display = 'none';
-				}, 3000);
+				}, 1000);
 
 				//
 			}, error => {
