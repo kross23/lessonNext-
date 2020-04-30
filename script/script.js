@@ -358,7 +358,7 @@ window.addEventListener('DOMContentLoaded', () => {
 				if (rexwest.readyState !== 4) {
 					return;
 				}
-				if (rexwest.status === 201) {
+				if (rexwest.status === 200) {
 					outputData();
 				} else {
 					errorData(rexwest.status);
