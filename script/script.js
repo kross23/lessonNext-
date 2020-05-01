@@ -349,7 +349,12 @@ window.addEventListener('DOMContentLoaded', () => {
 		const htmlBody = document.querySelector('body');
 		const statusMesage = document.createElement('div');
 		statusMesage.style.cssText = `font-size:2rem; color: #fff;`;
-		console.log('statusMesage: ', statusMesage);
+		
+		console.log('name: ', name);
+		const email = document.querySelectorAll('input[name = "user_email"]');
+		console.log('email: ', email);
+		//const phones = document.querySelectorall('input[name = "user_phone"]');
+		//console.log('phone: ', phones);
 		//
 		const postData = (body, outputData, errorData) => {
 			const request = new XMLHttpRequest();
@@ -373,23 +378,10 @@ window.addEventListener('DOMContentLoaded', () => {
 			const targetid = event.target.id;
 			const form = targetid.substring(0, 5);
 			const forms = document.getElementById(form);
-			const mailPattern = /^\w+@\w+\.\w{3,}$/;
-			const namePatern = /^[а-яА-ЯёЁ\s]+$/;
-			const phonePatern = /^\+?[78][-\(]?\d{3}\)?-?\d{3}-?\d{2}-?\d{2}$/;
-			const name = forms.querySelector('input[name="user_name"]');
-			const email = forms.querySelector('input[name = "user_email"]');
-			const phone = forms.querySelector('input[name="user_phone"]');
-
-			if (mailPattern.test(email.value.trim())) {
-				console.log('mailPattern.test(email.value.trim()): ', mailPattern.test(email.value.trim()));
-				console.log('арес почты ');
-			} else if (namePatern.test(name.value.trim())) {
-				console.log('namePatern.test(name.value.trim()): ', namePatern.test(name.value.trim()));
-				
-			} else if (phonePatern.test(phone.value.trim())) {
-				console.log('phonePatern.test(phone.value.trim()): ', phonePatern.test(phone.value.trim()));
-			
-			}
+			const name = forms.querySelector('input[name = "user_name"]');
+			const phone = forms.querySelector('input[name = "user_phone"]');
+			name.value =name.value.trim().replace(/^[\%/\\&\?\,\'\;\.:!-+!@#\$\^*)(a-zA-Z0-9]+$/,'');
+			phone.value = phone.value.trim().replace (/^\+?[78][-\(]?\d{3}\)?-?\d{3}-?\d{2}-?\d{2}$/, '');
 
 			forms.addEventListener('submit', event => {
 				event.preventDefault();
