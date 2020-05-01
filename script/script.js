@@ -349,7 +349,7 @@ window.addEventListener('DOMContentLoaded', () => {
 		const htmlBody = document.querySelector('body');
 		const statusMesage = document.createElement('div');
 		statusMesage.style.cssText = `font-size:2rem; color: #fff;`;
-		
+
 		console.log('name: ', name);
 		const email = document.querySelectorAll('input[name = "user_email"]');
 		console.log('email: ', email);
@@ -380,9 +380,11 @@ window.addEventListener('DOMContentLoaded', () => {
 			const forms = document.getElementById(form);
 			const name = forms.querySelector('input[name = "user_name"]');
 			const phone = forms.querySelector('input[name = "user_phone"]');
-			name.value =name.value.trim().replace(/^[\%/\\&\?\,\'\;\.:!-+!@#\$\^*)(a-zA-Z0-9]+$/,'');
-			phone.value = phone.value.trim().replace (/^\+?[78][-\(]?\d{3}\)?-?\d{3}-?\d{2}-?\d{2}$/, '');
-
+			name.value = name.value.trim().replace(/^[\%/\\&\?\,\'\;\.:!-+!@#\$\^*)(a-zA-Z0-9]+$/, '');
+			if (event.target === phone) {
+				phone.value = phone.value.trim().replace(/^\D$/, '');
+				console.log('phone.value: ', phone.value);
+			}
 			forms.addEventListener('submit', event => {
 				event.preventDefault();
 				forms.appendChild(statusMesage);
