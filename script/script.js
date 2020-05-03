@@ -351,23 +351,27 @@ window.addEventListener('DOMContentLoaded', () => {
 		const forms = document.querySelectorAll('form');
 		console.log('forms: ', forms);
 		//
-		const postData = (body, outputData, errorData) => {
+		const postData = body => new Promise((resolve, reject) => {
 			const request = new XMLHttpRequest();
 			request.addEventListener('readystatechange', () => {
 				statusMesage.textContent = loadMesage;
 				if (request.readyState !== 4) {
+					statusMesage.textContent = errorMesage;
 					return;
 				}
 				if (request.status === 200) {
-					outputData();
+					console.log('request.statusText: ', request.statusText);
+					resolve(request.statusText);
+
 				} else {
-					errorData(request.status);
+					statusMesage.textContent = errorMesage;
+					reject(request.statusText);
 				}
 			});
 			request.open('POST', './server.php');
 			request.setRequestHeader('Content-Type', 'application/json');
 			request.send(JSON.stringify(body));
-		};
+		});
 		//
 		forms.forEach(item => {
 			item.addEventListener('input', event => {
@@ -408,29 +412,20 @@ window.addEventListener('DOMContentLoaded', () => {
 				item.appendChild(statusMesage);
 				const formData = new FormData(item);
 				const body = {};
-				formData.forEach((val, key) => {
-					return body[key] = val;
-				});
-				postData(body, () => {
+				formData.forEach((val, key) => body[key] = val);
+				postData(body).then(() => {
 					statusMesage.textContent = succsesMesage;
 					setTimeout(() => {
-						//forms.querySelectorAll('input[name], textarea').forEach(el => el.value = '');
-						let allInput = document.querySelectorAll('input').forEach(el => el.value = '');
+						const allInput = document.querySelectorAll('input').forEach(el => el.value = '');
 
 						const pop = document.querySelector('.popup');
 						pop.style.display = 'none';
 					}, 1000);
 					//
-				}, error => {
-					statusMesage.textContent = errorMesage;
-					console.error(error);
-				});
-
-
+				}).catch(error => console.error(error));
 			});
 
 		});
-
 	};
 	sendForm();
 });
