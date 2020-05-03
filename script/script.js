@@ -349,25 +349,28 @@ window.addEventListener('DOMContentLoaded', () => {
 		const statusMesage = document.createElement('div');
 		statusMesage.style.cssText = `font-size:2rem; color: #fff;`;
 		const forms = document.querySelectorAll('form');
-		console.log('forms: ', forms);
+		//console.log('forms: ', forms);
 		//
-		const postData = (body, outputData, errorData) => {
+		const postData = body => new Promise((resolve, reject) => {
 			const request = new XMLHttpRequest();
 			request.addEventListener('readystatechange', () => {
 				statusMesage.textContent = loadMesage;
 				if (request.readyState !== 4) {
+					//statusMesage.textContent = errorMesage;
 					return;
 				}
 				if (request.status === 200) {
-					outputData();
+					resolve(request.statusText);
+
+
 				} else {
-					errorData(request.status);
+					reject(request.statusText);
 				}
 			});
 			request.open('POST', './server.php');
 			request.setRequestHeader('Content-Type', 'application/json');
 			request.send(JSON.stringify(body));
-		};
+		});
 		//
 		forms.forEach(item => {
 			item.addEventListener('input', event => {
@@ -375,7 +378,7 @@ window.addEventListener('DOMContentLoaded', () => {
 					message = item.querySelector('input[name = "user_message"]'),
 					name = item.querySelector('input[name = "user_name"]'),
 					formBtn = item.querySelector('.form-btn');
-				console.log(phone);
+				//console.log(phone);
 				const onBtn = () => {
 					formBtn.removeAttribute('disabled');
 				};
@@ -383,14 +386,15 @@ window.addEventListener('DOMContentLoaded', () => {
 					formBtn.setAttribute('disabled', true);
 				};
 				if (event.target === name) {
-					console.log('name validation work');
+					//console.log('name validation work');
 					name.value = name.value.replace(/([^А-Яа-яЁё])*/g, '');
 				}
 
 				if (event.target === phone && !phone.value.match(/(\+|\d){1}(\d){8,20}(?![A-Za-zА-Яа-яЁё])/g)) {
-					console.log('phone validation work');
+					//	console.log('phone validation work');
 					item.appendChild(statusMesage);
 					statusMesage.style.color = 'red';
+					phone.value = phone.value.trim().replace(/^[A-Za-zА-Яа-яЁё]$/g, '');
 					statusMesage.textContent = 'Номер должен быть не менее 8 цифр';
 					offBtn();
 				} else if (phone.value.match(/(\+|\d){1}(\d){8,20}(?![A-Za-zА-Яа-яЁё])/g)) {
@@ -408,32 +412,23 @@ window.addEventListener('DOMContentLoaded', () => {
 				item.appendChild(statusMesage);
 				const formData = new FormData(item);
 				const body = {};
-				formData.forEach((val, key) => {
-					return body[key] = val;
-				});
-				postData(body, () => {
-					statusMesage.textContent = succsesMesage;
-					setTimeout(() => {
-						//forms.querySelectorAll('input[name], textarea').forEach(el => el.value = '');
-						let allInput = document.querySelectorAll('input').forEach(el => el.value = '');
+				formData.forEach((val, key) => body[key] = val);
+				postData(body).then(() => {
+					statusMesage.textContent = loadMesage;
+				})
+					.then(() => {
+						const allInput = document.querySelectorAll('input').forEach(el => el.value = '');
 
 						const pop = document.querySelector('.popup');
 						pop.style.display = 'none';
-					}, 1000);
-					//
-				}, error => {
-					statusMesage.textContent = errorMesage;
-					console.error(error);
-				});
-
-
+						statusMesage.textContent = succsesMesage;
+					})
+					.catch(error => {
+						statusMesage.textContent = errorMesage;
+						console.error(error);
+					});
 			});
-
 		});
-
 	};
 	sendForm();
 });
-// if (target.matches('.calc-type') || target.matches(.calc-square')||
-//  target.matches('.calc-count') || target.matches('.calc-day')){
-// 	console.log(1);
