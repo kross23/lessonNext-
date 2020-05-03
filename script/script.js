@@ -349,7 +349,7 @@ window.addEventListener('DOMContentLoaded', () => {
 		const statusMesage = document.createElement('div');
 		statusMesage.style.cssText = `font-size:2rem; color: #fff;`;
 		const forms = document.querySelectorAll('form');
-		console.log('forms: ', forms);
+	//	console.log('forms: ', forms);
 		//
 		const postData = body => new Promise((resolve, reject) => {
 			const request = new XMLHttpRequest();
@@ -379,7 +379,7 @@ window.addEventListener('DOMContentLoaded', () => {
 					message = item.querySelector('input[name = "user_message"]'),
 					name = item.querySelector('input[name = "user_name"]'),
 					formBtn = item.querySelector('.form-btn');
-				console.log(phone);
+				//console.log(phone);
 				const onBtn = () => {
 					formBtn.removeAttribute('disabled');
 				};
@@ -387,12 +387,13 @@ window.addEventListener('DOMContentLoaded', () => {
 					formBtn.setAttribute('disabled', true);
 				};
 				if (event.target === name) {
-					console.log('name validation work');
+					//console.log('name validation work');
 					name.value = name.value.replace(/([^А-Яа-яЁё])*/g, '');
 				}
 
 				if (event.target === phone && !phone.value.match(/(\+|\d){1}(\d){8,20}(?![A-Za-zА-Яа-яЁё])/g)) {
 					console.log('phone validation work');
+				 	phone.value.replace(/([^А-Яа-яЁё.,\-'"!\s])*/g, '');
 					item.appendChild(statusMesage);
 					statusMesage.style.color = 'red';
 					statusMesage.textContent = 'Номер должен быть не менее 8 цифр';
@@ -403,7 +404,7 @@ window.addEventListener('DOMContentLoaded', () => {
 					onBtn();
 				}
 				if (event.target === message) {
-					console.log('message validation work');
+					///console.log('message validation work');
 					message.value = message.value.replace(/([^А-Яа-яЁё.,\-'"!\s])*/g, '');
 				}
 			});
