@@ -349,21 +349,16 @@ window.addEventListener('DOMContentLoaded', () => {
 		const statusMesage = document.createElement('div');
 		statusMesage.style.cssText = `font-size:2rem; color: #fff;`;
 		const forms = document.querySelectorAll('form');
-	//	console.log('forms: ', forms);
-		//
 		const postData = body => new Promise((resolve, reject) => {
 			const request = new XMLHttpRequest();
 			request.addEventListener('readystatechange', () => {
 				statusMesage.textContent = loadMesage;
 				if (request.readyState !== 4) {
-					statusMesage.textContent = errorMesage;
 					return;
 				}
 				if (request.status === 200) {
-					console.log('request.statusText: ', request.statusText);
 					resolve(request.statusText);
 				} else {
-					statusMesage.textContent = errorMesage;
 					reject(request.statusText);
 				}
 			});
@@ -390,19 +385,20 @@ window.addEventListener('DOMContentLoaded', () => {
 					name.value = name.value.replace(/([^А-Яа-яЁё])*/g, '');
 				}
 				if (event.target === phone && !phone.value.match(/(\+|\d){1}(\d){8,20}(?![A-Za-zА-Яа-яЁё])/g)) {
-					console.log('phone validation work');
-				 	phone.value.replace(/([^А-Яа-яЁё.,\-'"!\s])*/g, '');
+					//	console.log('phone validation work');
 					item.appendChild(statusMesage);
 					statusMesage.style.color = 'red';
+					
 					statusMesage.textContent = 'Номер должен быть не менее 8 цифр';
 					offBtn();
 				} else if (phone.value.match(/(\+|\d){1}(\d){8,20}(?![A-Za-zА-Яа-яЁё])/g)) {
+					phone.value = phone.value.trim().replace(/^[A-Za-zА-Яа-яЁё]$/g, '');
 					statusMesage.style.color = '#fff';
 					statusMesage.textContent = '';
 					onBtn();
 				}
 				if (event.target === message) {
-					///console.log('message validation work');
+					//console.log('message validation work');
 					message.value = message.value.replace(/([^А-Яа-яЁё.,\-'"!\s])*/g, '');
 				}
 			});
@@ -412,20 +408,22 @@ window.addEventListener('DOMContentLoaded', () => {
 				const formData = new FormData(item);
 				const body = {};
 				formData.forEach((val, key) => body[key] = val);
-				postData(body).then(() => {
-					statusMesage.textContent = succsesMesage;
-					setTimeout(() => {
+				postData(body)
+				.then(() => {
+					statusMesage.textContent = loadMesage;
+				})
+					.then(() => {
 						const allInput = document.querySelectorAll('input').forEach(el => el.value = '');
 						const pop = document.querySelector('.popup');
 						pop.style.display = 'none';
-					}, 1000);
-					//
-				}).catch(error => console.error(error));
+						statusMesage.textContent = succsesMesage;
+					})
+					.catch(error => {
+						statusMesage.textContent = errorMesage;
+						console.error(error);
+					});
 			});
 		});
 	};
 	sendForm();
 });
-// if (target.matches('.calc-type') || target.matches(.calc-square')||
-//  target.matches('.calc-count') || target.matches('.calc-day')){
-// 	console.log(1);
