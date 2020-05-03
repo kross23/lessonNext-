@@ -362,7 +362,6 @@ window.addEventListener('DOMContentLoaded', () => {
 				if (request.status === 200) {
 					console.log('request.statusText: ', request.statusText);
 					resolve(request.statusText);
-
 				} else {
 					statusMesage.textContent = errorMesage;
 					reject(request.statusText);
@@ -390,7 +389,6 @@ window.addEventListener('DOMContentLoaded', () => {
 					//console.log('name validation work');
 					name.value = name.value.replace(/([^А-Яа-яЁё])*/g, '');
 				}
-
 				if (event.target === phone && !phone.value.match(/(\+|\d){1}(\d){8,20}(?![A-Za-zА-Яа-яЁё])/g)) {
 					console.log('phone validation work');
 				 	phone.value.replace(/([^А-Яа-яЁё.,\-'"!\s])*/g, '');
@@ -418,14 +416,12 @@ window.addEventListener('DOMContentLoaded', () => {
 					statusMesage.textContent = succsesMesage;
 					setTimeout(() => {
 						const allInput = document.querySelectorAll('input').forEach(el => el.value = '');
-
 						const pop = document.querySelector('.popup');
 						pop.style.display = 'none';
 					}, 1000);
 					//
 				}).catch(error => console.error(error));
 			});
-
 		});
 	};
 	sendForm();
