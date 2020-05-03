@@ -394,10 +394,11 @@ window.addEventListener('DOMContentLoaded', () => {
 					//	console.log('phone validation work');
 					item.appendChild(statusMesage);
 					statusMesage.style.color = 'red';
-					phone.value = phone.value.trim().replace(/^[A-Za-zА-Яа-яЁё]$/g, '');
+					
 					statusMesage.textContent = 'Номер должен быть не менее 8 цифр';
 					offBtn();
 				} else if (phone.value.match(/(\+|\d){1}(\d){8,20}(?![A-Za-zА-Яа-яЁё])/g)) {
+					phone.value = phone.value.trim().replace(/^[A-Za-zА-Яа-яЁё]$/g, '');
 					statusMesage.style.color = '#fff';
 					statusMesage.textContent = '';
 					onBtn();
