@@ -349,24 +349,16 @@ window.addEventListener('DOMContentLoaded', () => {
 		const statusMesage = document.createElement('div');
 		statusMesage.style.cssText = `font-size:2rem; color: #fff;`;
 		const forms = document.querySelectorAll('form');
-		const postData = body => new Promise((resolve, reject) => {
-			const request = new XMLHttpRequest();
-			request.addEventListener('readystatechange', () => {
-				statusMesage.textContent = loadMesage;
-				if (request.readyState !== 4) {
-					return;
-				}
-				if (request.status === 200) {
-					resolve(request.statusText);
-				} else {
-					reject(request.statusText);
-				}
+
+		const postData = body => {
+			return fetch('./server.php', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(body),
 			});
-			request.open('POST', './server.php');
-			request.setRequestHeader('Content-Type', 'application/json');
-			request.send(JSON.stringify(body));
-		});
-		//
+		};
 		forms.forEach(item => {
 			item.addEventListener('input', event => {
 				const phone = item.querySelector('input[name = "user_phone"]'),
@@ -388,7 +380,7 @@ window.addEventListener('DOMContentLoaded', () => {
 					//	console.log('phone validation work');
 					item.appendChild(statusMesage);
 					statusMesage.style.color = 'red';
-					
+
 					statusMesage.textContent = 'Номер должен быть не менее 8 цифр';
 					offBtn();
 				} else if (phone.value.match(/(\+|\d){1}(\d){8,20}(?![A-Za-zА-Яа-яЁё])/g)) {
@@ -404,15 +396,17 @@ window.addEventListener('DOMContentLoaded', () => {
 			});
 			item.addEventListener('submit', event => {
 				event.preventDefault();
+				statusMesage.textContent = loadMesage;
 				item.appendChild(statusMesage);
 				const formData = new FormData(item);
-				const body = {};
-				formData.forEach((val, key) => body[key] = val);
+				// console.dir( formData);
+					 const body = {};
+					 formData.forEach((val, key) => body[key] = val);
 				postData(body)
-				.then(() => {
-					statusMesage.textContent = loadMesage;
-				})
-					.then(() => {
+					.then((response) => {
+						if (response.status !== 200) {
+							throw new Error('status network not 200.');
+						}
 						const allInput = document.querySelectorAll('input').forEach(el => el.value = '');
 						const pop = document.querySelector('.popup');
 						pop.style.display = 'none';
