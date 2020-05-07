@@ -1,17 +1,21 @@
 const slayder = () => {
     const uL = document.createElement('ul');
     uL.classList.add('portfolio-dots');
-    const portofino = document.querySelector('.portfolio-content');
+    let portofino = document.querySelector('.portfolio-content');
     for (let i = 0; i < 6; i++) {
         const Li = document.createElement('li');
         Li.classList.add('dot');
-        uL.append(Li);
+       // uL.append(Li);
+        uL.insertBefore(Li, uL.firstChild);
     }
-    portofino.append(uL);
-
+    //portofino.append(uL);
+    portofino.insertBefore(uL, slayde);
+  //  portofino.insertBefore(uL, slayde);
+   // portofino.appendChild(uL);
     const slayde = document.querySelectorAll('.portfolio-item'),
         dot = document.querySelectorAll('.dot'),
         clayder = document.querySelector('.portfolio-content');
+        
     let carentSlayd = 0,
         interval;
     const prew = (elem, index, strClass) => {
