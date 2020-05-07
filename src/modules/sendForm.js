@@ -21,7 +21,6 @@ const sendForm = () => {
                 message = item.querySelector('input[name = "user_message"]'),
                 name = item.querySelector('input[name = "user_name"]'),
                 formBtn = item.querySelector('.form-btn');
-            //console.log(phone);
             const onBtn = () => {
                 formBtn.removeAttribute('disabled');
             };
@@ -29,14 +28,11 @@ const sendForm = () => {
                 formBtn.setAttribute('disabled', true);
             };
             if (event.target === name) {
-                //console.log('name validation work');
                 name.value = name.value.replace(/([^А-Яа-яЁё])*/g, '');
             }
             if (event.target === phone && !phone.value.match(/(\+|\d){1}(\d){8,20}(?![A-Za-zА-Яа-яЁё])/g)) {
-                //	console.log('phone validation work');
                 item.appendChild(statusMesage);
                 statusMesage.style.color = 'red';
-
                 statusMesage.textContent = 'Номер должен быть не менее 8 цифр';
                 offBtn();
             } else if (phone.value.match(/(\+|\d){1}(\d){8,20}(?![A-Za-zА-Яа-яЁё])/g)) {
@@ -46,7 +42,6 @@ const sendForm = () => {
                 onBtn();
             }
             if (event.target === message) {
-                //console.log('message validation work');
                 message.value = message.value.replace(/([^А-Яа-яЁё.,\-'"!\s])*/g, '');
             }
         });
@@ -55,7 +50,6 @@ const sendForm = () => {
             statusMesage.textContent = loadMesage;
             item.appendChild(statusMesage);
             const formData = new FormData(item);
-            // console.dir( formData);
                  const body = {};
                  formData.forEach((val, key) => body[key] = val);
             postData(body)

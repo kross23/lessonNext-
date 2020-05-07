@@ -11,8 +11,6 @@
 			totalValue.textContent = count;
 			count += 100;
 			console.log('count : ', count);
-			//	count = parseInt(count);
-
 			if (count < to) {
 				requestAnimationFrame(nums);
 			} else {

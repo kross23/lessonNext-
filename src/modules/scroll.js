@@ -14,7 +14,7 @@ const scroll = () => {
     serviceBlock.addEventListener('click', event => { //827
         event.preventDefault();
         str();
-       // console.log(document.documentElement.scrollTop);
+       
     });
 };
 export default scroll;

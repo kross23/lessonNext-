@@ -1,8 +1,7 @@
 const toglMenu = () => {
     const menu = document.querySelector('menu'),
         maiN = document.querySelector('main');
-
-    maiN.addEventListener('click', event => {
+        maiN.addEventListener('click', event => {
         const target = event.target;
         if (target.closest('.menu')) {
             menu.classList.add('active-menu');

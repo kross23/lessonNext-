@@ -8,14 +8,10 @@ const slayder = () => {
        // uL.append(Li);
         uL.insertBefore(Li, uL.firstChild);
     }
-    //portofino.append(uL);
-    portofino.insertBefore(uL, slayde);
-  //  portofino.insertBefore(uL, slayde);
-   // portofino.appendChild(uL);
+    portofino.insertBefore(uL, portofino.firstChild);
     const slayde = document.querySelectorAll('.portfolio-item'),
         dot = document.querySelectorAll('.dot'),
         clayder = document.querySelector('.portfolio-content');
-        
     let carentSlayd = 0,
         interval;
     const prew = (elem, index, strClass) => {
@@ -24,7 +20,6 @@ const slayder = () => {
     const next = (elem, index, strClass) => {
         elem[index].classList.add(strClass);
     };
-
     const autoplaySlayd = () => {
         prew(dot, carentSlayd, 'dot-active');
         prew(slayde, carentSlayd, 'portfolio-item-active');
@@ -36,7 +31,6 @@ const slayder = () => {
         }
         next(slayde, carentSlayd, 'portfolio-item-active');
         next(dot, carentSlayd, 'dot-active');
-
     };
     const startSlayde = (time = 3000) => {
         interval = setInterval(autoplaySlayd, time);
@@ -44,7 +38,6 @@ const slayder = () => {
     const stopSlayde = () => {
         clearInterval(interval);
     };
-
     clayder.addEventListener('click', event => {
         event.preventDefault();
         const target = event.target;
