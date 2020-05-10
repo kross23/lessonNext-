@@ -5,10 +5,11 @@ const slayder = () => {
     for (let i = 0; i < 6; i++) {
         const Li = document.createElement('li');
         Li.classList.add('dot');
-       // uL.append(Li);
         uL.insertBefore(Li, uL.firstChild);
     }
     portofino.insertBefore(uL, portofino.firstChild);
+    const dota = document.querySelectorAll('.dot');
+    dota[0].classList.add('dot-active');//правка
     const slayde = document.querySelectorAll('.portfolio-item'),
         dot = document.querySelectorAll('.dot'),
         clayder = document.querySelector('.portfolio-content');

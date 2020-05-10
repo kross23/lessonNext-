@@ -1,7 +1,8 @@
 const sendForm = () => {
     const errorMesage = 'что то пошло не так ',
         loadMesage = 'загрузка....',
-        succsesMesage = 'мы скоро с вами свяжемся!';
+        succsesMesage = 'мы скоро с вами свяжемся!',
+        empty = '';
     const statusMesage = document.createElement('div');
     statusMesage.style.cssText = `font-size:2rem; color: #fff;`;
     const forms = document.querySelectorAll('form');
@@ -14,6 +15,14 @@ const sendForm = () => {
             },
             body: JSON.stringify(body),
         });
+    };
+    const clear = ()=>{
+        const allInput = document.querySelectorAll('input').forEach(el => el.value = '');
+        const pop = document.querySelector('.popup');
+        if(pop.style.display !== 'none'){
+            pop.style.display = 'none';
+        }
+        statusMesage.textContent = empty;
     };
     forms.forEach(item => {
         item.addEventListener('input', event => {
@@ -56,13 +65,12 @@ const sendForm = () => {
                 .then((response) => {
                     if (response.status !== 200) {
                         throw new Error('status network not 200.');
+                    }else{
+                        statusMesage.textContent = succsesMesage;
                     }
-                    const allInput = document.querySelectorAll('input').forEach(el => el.value = '');
-                    const pop = document.querySelector('.popup');
-                    pop.style.display = 'none';
-                    statusMesage.textContent = succsesMesage;
                 })
-                .catch(error => {
+                .then(setTimeout(clear, 4500))
+                .catch( error => {
                     statusMesage.textContent = errorMesage;
                     console.error(error);
                 });
